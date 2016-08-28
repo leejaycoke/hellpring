@@ -1,7 +1,6 @@
 package com.hellpring.controller;
 
 import com.hellpring.command.LoginCommand;
-import com.hellpring.config.DBConfig;
 import com.hellpring.dao.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,16 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(value = "/user")
 public class UserController {
 
-    @Autowired
-    private DBConfig dbConfig;
-
-    @Autowired
-    private UserDAO userDAO;
-
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     @ResponseBody
     public String login() {
-        return "hellow world" + dbConfig.getDriver();
+        return "hellow world" + new UserDAO().get();
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)

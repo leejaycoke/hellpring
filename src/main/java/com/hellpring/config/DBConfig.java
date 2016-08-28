@@ -1,22 +1,26 @@
 package com.hellpring.config;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.sql.DataSource;
-import java.beans.PropertyVetoException;
 
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackageClasses = {SpringWebConfig.class})
 @PropertySource("classpath:db.properties")
 public class DBConfig {
+
+    @Autowired
+    private DataSource dataSource;
 
     @Value("${driver}")
     private String driver;
@@ -30,51 +34,29 @@ public class DBConfig {
     @Value("${password}")
     private String password;
 
-    public String getDriver() {
-        return driver;
-    }
-
-    public void setDriver(String driver) {
-        this.driver = driver;
-    }
-
-    public String getUri() {
-        return uri;
-    }
-
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     @Bean
     public DataSource dataSource() {
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         ComboPooledDataSource ds = new ComboPooledDataSource();
         try {
+            System.out.println("driver=" + driver);
             ds.setDriverClass(driver);
-        } catch (PropertyVetoException e) {
+            ds.setJdbcUrl(uri);
+            ds.setUser("root");
+            ds.setPassword(password);
+        } catch (Exception e) {
+            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>error");
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
 
-        ds.setJdbcUrl(uri);
-        ds.setUser(user);
-        ds.setPassword(password);
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>2" + ds.toString());
         return ds;
+    }
+
+    @Bean
+    public JdbcTemplate getJdbcTemplate() {
+        return new JdbcTemplate(dataSource);
     }
 
     @Bean
