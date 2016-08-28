@@ -15,6 +15,8 @@ dependencies {
 //    testCompile group: 'junit', name: 'junit', version: '4.11'
     compile(
             'org.springframework:spring-webmvc:4.3.2.RELEASE',
+            'org.springframework:spring-jdbc:4.3.2.RELEASE',
+            'com.mchange:c3p0:0.9.5.2',
             'javax.servlet:jstl:1.2',
     )
 
