@@ -19,9 +19,6 @@ import javax.sql.DataSource;
 @PropertySource("classpath:db.properties")
 public class DBConfig {
 
-    @Autowired
-    private DataSource dataSource;
-
     @Value("${driver}")
     private String driver;
 
@@ -36,27 +33,23 @@ public class DBConfig {
 
     @Bean
     public DataSource dataSource() {
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>1");
         ComboPooledDataSource ds = new ComboPooledDataSource();
         try {
             System.out.println("driver=" + driver);
-            ds.setDriverClass(driver);
-            ds.setJdbcUrl(uri);
-            ds.setUser("root");
-            ds.setPassword(password);
+            ds.setDriverClass("org.h2.Driver");
         } catch (Exception e) {
             System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>error");
             e.printStackTrace();
             throw new RuntimeException(e);
         }
 
+        ds.setJdbcUrl("jdbc:h2:tcp://localhost/~/test");
+        ds.setUser("sa");
+        ds.setPassword("");
+
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>2" + ds.toString());
         return ds;
-    }
-
-    @Bean
-    public JdbcTemplate getJdbcTemplate() {
-        return new JdbcTemplate(dataSource);
     }
 
     @Bean

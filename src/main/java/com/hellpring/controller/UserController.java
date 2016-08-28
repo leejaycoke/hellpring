@@ -13,10 +13,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(value = "/user")
 public class UserController {
 
+    @Autowired
+    private UserDAO userDAO;
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     @ResponseBody
     public String login() {
-        return "hellow world" + new UserDAO().get();
+        return "hellow world" + userDAO.get();
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
