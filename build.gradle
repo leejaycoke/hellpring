@@ -18,7 +18,6 @@ dependencies {
             'org.springframework:spring-jdbc:4.3.2.RELEASE',
             'com.mchange:c3p0:0.9.5.2',
             'com.h2database:h2:1.4.191',
-            'mysql:mysql-connector-java:6.0.3',
             'javax.servlet:jstl:1.2',
             'org.apache.logging.log4j:log4j-core:2.6.2'
     )

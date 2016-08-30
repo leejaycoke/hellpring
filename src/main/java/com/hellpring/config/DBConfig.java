@@ -15,19 +15,51 @@ import javax.sql.DataSource;
 @PropertySource("classpath:db.properties")
 public class DBConfig {
 
-    private Logger logger = LogManager.getLogger(getClass().getName());
+    private final static Logger LOGGER = LogManager.getLogger(DBConfig.class.getName());
 
-    @Value("${driver}")
+    @Value("${db.driver}")
     private String driver;
 
-    @Value("${url}")
+    @Value("${db.url}")
     private String url;
 
-    @Value("${username}")
+    @Value("${db.username}")
     private String username;
 
-    @Value("${password}")
+    @Value("${db.password}")
     private String password;
+
+    public String getDriver() {
+        return driver;
+    }
+
+    public void setDriver(String driver) {
+        this.driver = driver;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     @Override
     public String toString() {
@@ -41,7 +73,7 @@ public class DBConfig {
 
     @Bean
     public DataSource dataSource() {
-        logger.error("config={}", toString());
+        LOGGER.debug("config={}", toString());
         ComboPooledDataSource ds = new ComboPooledDataSource();
         try {
             ds.setDriverClass(driver);
