@@ -7,7 +7,7 @@ public class UserModel extends Model {
 
     private int id;
 
-    private int email;
+    private String email;
 
     private String password;
 
@@ -19,11 +19,11 @@ public class UserModel extends Model {
         this.id = id;
     }
 
-    public int getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(int email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 

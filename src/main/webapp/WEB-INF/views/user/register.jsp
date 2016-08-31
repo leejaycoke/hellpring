@@ -4,19 +4,18 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <title>로그인</title>
+    <title>회원가입</title>
     <meta charset="utf-8">
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-
 </head>
 <body>
 
 <div class="container">
     <div class="page-header">
         <h1>지옥자바
-            <small>로그인</small>
+            <small>회원가입</small>
         </h1>
     </div>
     <c:if test="${error != null}">
@@ -30,11 +29,10 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form:form commandName="login">
+                    <form:form commandName="register">
                         <div class="form-group">
-                            <label>이메일 주소</label>
-                            <input type="text" class="form-control input-lg" name="email"
-                                   <c:if test="${account != null}">value="${account}"</c:if>>
+                            <label>아이디</label>
+                            <input type="text" class="form-control input-lg" name="email">
                             <form:errors path="email" />
                         </div>
                         <div class="form-group">
@@ -42,18 +40,10 @@
                             <input type="password" class="form-control input-lg" name="password">
                             <form:errors path="password" />
                         </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="is_remember"
-                                       <c:if test="${account != null}">checked</c:if>> 아이디 저장
-                            </label>
-                        </div>
-
-                        <button type="submit" class="btn btn-success btn-lg btn-block">로그인</button>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">회원가입</button>
                     </form:form>
                 </div>
             </div>
-            <div class="pull-right"><a href="/user/register"><h4>회원가입</h4></a></div>
         </div>
     </div>
 </div>

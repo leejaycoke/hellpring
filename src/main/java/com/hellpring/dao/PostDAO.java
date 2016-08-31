@@ -4,6 +4,9 @@ import com.hellpring.model.PostModel;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class PostDAO extends DAO<PostModel> {
 
@@ -11,18 +14,46 @@ public class PostDAO extends DAO<PostModel> {
         super(PostModel.class);
     }
 
-    private RowMapper<PostModel> rowMapper = (rs, rowNum) -> {
-        PostModel post = new PostModel();
-        return post;
-    };
-
     @Override
-    public void delete(int id) {
-
+    public int insert(PostModel model) {
+        String sql = "INSERT INTO post(title, content)" +
+                "VALUES (?, ?)";
+        return jdbcTemplate.update(sql, model.getTitle(), model.getContent());
     }
 
     @Override
     public RowMapper<PostModel> getRowMapper() {
         return rowMapper;
     }
+
+    @Override
+    public RowMapper<List<PostModel>> getRowsMapper() {
+        return rowsMapper;
+    }
+
+    private RowMapper<List<PostModel>> rowsMapper = (rs, rowNum) -> {
+        List<PostModel> posts = new ArrayList<>();
+
+        if (rowNum == 0) {
+            return posts;
+        }
+
+        while (rs.next()) {
+            PostModel post = new PostModel();
+            post.setId(rs.getInt("id"));
+            posts.add(post);
+        }
+
+        return posts;
+    };
+
+    private RowMapper<PostModel> rowMapper = (rs, rowNum) -> {
+        if (rowNum == 0) {
+            return null;
+        }
+
+        PostModel post = new PostModel();
+        post.setId(rs.getInt("id"));
+        return post;
+    };
 }

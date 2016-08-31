@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.AnnotationConfigurationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -29,7 +30,7 @@ public abstract class DAO<T extends Model> {
 
     private String tableName;
 
-    private JdbcTemplate jdbcTemplate;
+    protected JdbcTemplate jdbcTemplate;
 
     private Class clazz;
 
@@ -51,43 +52,37 @@ public abstract class DAO<T extends Model> {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public Optional<T> select(int id) {
-        LOGGER.debug("select id={}, tableName={}", id, tableName);
-
+    public T select(int id) {
         String sql = String.format("SELECT * FROM %s WHERE id = ?", tableName);
-        List<T> models = jdbcTemplate.queryForObject(sql, new RowMapper<List<T>>() {
-            @Override
-            public List<T> mapRow(ResultSet rs, int rowNum) throws SQLException {
-                for (Field field : clazz.getDeclaredFields()) {
-                    if (!field.isAnnotationPresent(Column.class)) {
-                        continue;
-                    }
 
-//                    rs.getNam
+        LOGGER.debug("sql={}", sql);
 
-                    String typeName = field.getType().getTypeName();
-                    Method method = RsType.TYPES.get(typeName);
-
-                    if (method.)
-
-                }
-            }
-        }, id);
+        try {
+            return jdbcTemplate.queryForObject(sql, getRowMapper(), id);
+        } catch (EmptyResultDataAccessException e) {
+            e.printStackTrace();
+            LOGGER.error(e);
+            return null;
+        }
     }
 
     public List<T> selectAll() {
-        return null;
-//        LOGGER.debug("select id={}, tableName={}", id, tableName);
+        String sql = String.format("SELECT * FROM %s", tableName);
+
+        LOGGER.debug("sql={}", sql);
+
+        return jdbcTemplate.query(sql, getRowMapper());
     }
 
-    public Optional<T> insert(T model) {
-        return null;
-    }
+    public abstract int insert(T model);
 
     public void delete(int id) {
-
+        String sql = String.format("DELETE FROM %s WHERE id = ?", tableName);
+        jdbcTemplate.update(sql, id);
     }
 
-    public abstract RowMapper<List<T>> getRowMapper();
+    public abstract RowMapper<T> getRowMapper();
+
+    public abstract RowMapper<List<T>> getRowsMapper();
 
 }

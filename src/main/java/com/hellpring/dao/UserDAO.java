@@ -27,34 +27,37 @@ public class UserDAO extends DAO<UserModel> {
     }
 
     @Override
-    public List<UserModel> selectAll() {
-        return null;
+    public int insert(UserModel model) {
+        String sql = "INSERT INTO user(email, password)" +
+                "VALUES (?, ?)";
+        return jdbcTemplate.update(sql, model.getEmail(), model.getPassword());
+    }
+
+    public UserModel selectByEmail(String email) {
+        String sql = "SELECT * FROM user WHERE email = ?";
+        return jdbcTemplate.queryForObject(sql, rowMapper, email);
     }
 
     @Override
-    public Optional<UserModel> insert(UserModel model) {
-        return null;
-    }
-
-    @Override
-    public void delete(int id) {
-
-    }
-
-    @Override
-    public RowMapper<List<UserModel>> getRowMapper() {
-        LOGGER.debug("getRowMapper");
+    public RowMapper<UserModel> getRowMapper() {
         return rowMapper;
     }
 
-    private RowMapper<List<UserModel>> rowMapper = (rs, rowNum) -> {
-        LOGGER.debug("rowNum={}", rowNum);
+    @Override
+    public RowMapper<List<UserModel>> getRowsMapper() {
+        return rowsMapper;
+    }
 
+    private RowMapper<UserModel> rowMapper = (rs, rowNum) -> {
+        UserModel user = new UserModel();
+        user.setId(rs.getInt("id"));
+        user.setEmail(rs.getString("email"));
+        user.setPassword(rs.getString("password"));
+        return user;
+    };
+
+    private RowMapper<List<UserModel>> rowsMapper = (rs, rowNum) -> {
         List<UserModel> users = new ArrayList<>();
-
-        if (rowNum == 0) {
-            return users;
-        }
 
         while (rs.next()) {
             UserModel user = new UserModel();
