@@ -1,10 +1,6 @@
 package com.hellpring.dao;
 
-import com.hellpring.controller.UserController;
 import com.hellpring.model.Model;
-import com.hellpring.model.RsType;
-import com.hellpring.model.UserModel;
-import com.hellpring.model.annotations.Column;
 import com.hellpring.model.annotations.Table;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,18 +11,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import javax.sql.DataSource;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 public abstract class DAO<T extends Model> {
 
-    private final static Logger LOGGER = LogManager.getLogger(UserController.class);
+    private final static Logger LOGGER = LogManager.getLogger(DAO.class);
 
     private String tableName;
 

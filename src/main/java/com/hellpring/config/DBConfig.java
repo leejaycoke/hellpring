@@ -71,7 +71,7 @@ public class DBConfig {
                 '}';
     }
 
-    @Bean
+    @Bean(destroyMethod = "close")
     public DataSource dataSource() {
         LOGGER.debug("config={}", toString());
         ComboPooledDataSource ds = new ComboPooledDataSource();

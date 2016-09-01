@@ -1,6 +1,5 @@
 package com.hellpring.service;
 
-import com.hellpring.controller.UserController;
 import com.hellpring.dao.UserDAO;
 import com.hellpring.model.UserModel;
 import org.apache.logging.log4j.LogManager;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserService {
 
-    private final static Logger LOGGER = LogManager.getLogger(UserController.class);
+    private final static Logger LOGGER = LogManager.getLogger(UserService.class);
 
     @Autowired
     private UserDAO userDAO;

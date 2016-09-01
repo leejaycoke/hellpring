@@ -1,6 +1,8 @@
 package com.hellpring.dao;
 
 import com.hellpring.model.PostModel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
@@ -9,6 +11,8 @@ import java.util.List;
 
 @Component
 public class PostDAO extends DAO<PostModel> {
+
+    private final static Logger LOGGER = LogManager.getLogger(PostDAO.class);
 
     private PostDAO() {
         super(PostModel.class);

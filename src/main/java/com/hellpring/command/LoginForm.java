@@ -4,8 +4,6 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 public class LoginForm {
 
@@ -16,8 +14,7 @@ public class LoginForm {
     @NotEmpty(message = "비밀번호를 입력해주세요.")
     private String password;
 
-    @NotNull
-    private boolean rememberEmail;
+    private boolean remember;
 
     public String getEmail() {
         return email;
@@ -35,11 +32,20 @@ public class LoginForm {
         this.password = password;
     }
 
-    public boolean isRememberEmail() {
-        return rememberEmail;
+    public boolean isRemember() {
+        return remember;
     }
 
-    public void setRememberEmail(boolean rememberEmail) {
-        this.rememberEmail = rememberEmail;
+    public void setRemember(boolean remember) {
+        this.remember = remember;
+    }
+
+    @Override
+    public String toString() {
+        return "LoginForm{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", remember=" + remember +
+                '}';
     }
 }
