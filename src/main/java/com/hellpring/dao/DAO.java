@@ -72,6 +72,4 @@ public abstract class DAO<T extends Model> {
 
     public abstract RowMapper<T> getRowMapper();
 
-    public abstract RowMapper<List<T>> getRowsMapper();
-
 }

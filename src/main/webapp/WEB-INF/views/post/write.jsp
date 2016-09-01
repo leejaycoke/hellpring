@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -21,21 +22,24 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form action="/post/write" method="POST">
+                    <form:form commandName="write">
                         <div class="form-group">
                             <label>작성자</label>
                             <p>${sessionScope.get("account")}</p>
                         </div>
                         <div class="form-group">
                             <label>제목</label>
-                            <input type="text" class="form-control input-lg" name="title">
+                            <form:input path="title" cssClass="form-control input-lg"/>
+                            <form:errors path="title"/>
                         </div>
                         <div class="form-group">
                             <label>내용</label>
-                            <textarea class="form-control input-lg" name="content"></textarea>
+                            <form:textarea path="content" cssClass="form-control input-lg"/>
+                            <form:errors path="content"/>
                         </div>
+                        <form:errors/>
                         <button type="submit" class="btn btn-default btn-lg pull-right">완료</button>
-                    </form>
+                    </form:form>
                 </div>
             </div>
         </div>

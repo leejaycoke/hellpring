@@ -35,7 +35,7 @@
                 <c:forEach var="post" items="${posts}">
                     <tr>
                         <td>${post.id}</td>
-                        <td>${post.user.account}</td>
+                        <td>${post.user.email}</td>
                         <td>${post.title}</td>
                         <td>${post.regDateStr}</td>
                     </tr>

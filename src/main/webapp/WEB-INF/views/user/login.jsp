@@ -33,17 +33,17 @@
                     <form:form commandName="login">
                         <div class="form-group">
                             <label>이메일 주소</label>
-                            <input type="text" class="form-control input-lg" name="email">
+                            <form:input path="email" cssClass="form-control input-lg" />
                             <form:errors path="email"/>
                         </div>
                         <div class="form-group">
                             <label>비밀번호</label>
-                            <input type="password" class="form-control input-lg" name="password">
+                            <form:password path="password" cssClass="form-control input-lg" />
                             <form:errors path="password"/>
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" name="remember"> 아이디 저장
+                                <form:checkbox path="remember" /> 아이디 저장
                             </label>
                         </div>
 

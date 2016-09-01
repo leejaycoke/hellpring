@@ -9,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +30,7 @@ public class UserController {
 
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(LoginForm loginForm, @CookieValue(value = "remember", required = false) Cookie cookie) {
+    public String login(@ModelAttribute("login") LoginForm loginForm, @CookieValue(value = "remember", required = false) Cookie cookie) {
         if (cookie != null) {
             String email = cookie.getValue();
             loginForm.setEmail(email);
@@ -66,7 +65,7 @@ public class UserController {
 
         session.setAttribute("user_id", user.getId());
 
-        return "redirect:/post/list.jsp";
+        return "redirect:/post/list";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -85,6 +84,12 @@ public class UserController {
         user.setPassword(registerForm.getPassword());
         userService.register(user);
 
-        return "redirect:/user/login.jsp";
+        return "redirect:/user/login";
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/user/login";
     }
 }

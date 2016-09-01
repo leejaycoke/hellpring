@@ -35,11 +35,6 @@ public class UserDAO extends DAO<UserModel> {
         return rowMapper;
     }
 
-    @Override
-    public RowMapper<List<UserModel>> getRowsMapper() {
-        return rowsMapper;
-    }
-
     private RowMapper<UserModel> rowMapper = (rs, rowNum) -> {
         UserModel user = new UserModel();
         user.setId(rs.getInt("id"));
@@ -48,15 +43,4 @@ public class UserDAO extends DAO<UserModel> {
         return user;
     };
 
-    private RowMapper<List<UserModel>> rowsMapper = (rs, rowNum) -> {
-        List<UserModel> users = new ArrayList<>();
-
-        while (rs.next()) {
-            UserModel user = new UserModel();
-            user.setId(rs.getInt("id"));
-            users.add(user);
-        }
-
-        return users;
-    };
 }
